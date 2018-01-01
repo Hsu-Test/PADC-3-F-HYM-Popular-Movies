@@ -1,0 +1,37 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="btn_movie_overview_padding">16dp</dimen>
+    <dimen name="tv_movie_title_margin_left">8dp</dimen>
+    <dimen name="tv_movie_genre_margin_top">8dp</dimen>
+    <dimen name="tv_current_popularity_margin_top">8dp</dimen>
+
+    <dimen name="movie_logo_width">160dp</dimen>
+    <dimen name="movie_logo_height">240dp</dimen>
+    <dimen name="movie_margin_left">16dp</dimen>
+    <dimen name="movie_margin_right">16dp</dimen>
+    <dimen name="movie_margin_top">16dp</dimen>
+    <dimen name="movie_margin_bottom">16dp</dimen>
+    <dimen name="tv_rating_icon_padding">8dp</dimen>
+    <dimen name="ic_fav_rating_margin_left">8dp</dimen>
+    <dimen name="tv_title_text_size">20sp</dimen>
+    <dimen name="tv_information_text_size">16sp</dimen>
+    <dimen name="iv_margin_bottom">8dp</dimen>
+    <dimen name="tv_movie_tag_margin_left">8dp</dimen>
+    <dimen name="tv_synopsis_height">200dp</dimen>
+    <dimen name="tv_movie_title_padding">16dp</dimen>
+    <dimen name="tv_movie_genre_padding">4dp</dimen>
+    <dimen name="tv_movie_genre_margin_right">4dp</dimen>
+    <dimen name="divider_width">1dp</dimen>
+    <dimen name="divider_height">20dp</dimen>
+    <dimen name="tv_movie_review_margin_top">8dp</dimen>
+    <dimen name="iv_movie_trailer_height">180dp</dimen>
+    <dimen name="iv_movie_trailer_width">240dp</dimen>
+    <dimen name="movie_trailer_margin_right">4dp</dimen>
+    <dimen name="movie_trailer_margin_left">4dp</dimen>
+    <dimen name="movie_trailer_margin_bottom">4dp</dimen>
+    <dimen name="movie_trailer_margin_top">4dp</dimen>
+    <dimen name="tv_time_elapsed_padding">8dp</dimen>
+    <dimen name="rv_movies_review_margin_bottom">32dp</dimen>
+</resources>

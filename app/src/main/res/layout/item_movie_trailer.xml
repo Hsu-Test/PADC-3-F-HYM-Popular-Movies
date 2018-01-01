@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/fl_movie_trailers"
+    android:layout_marginTop="@dimen/movie_margin_top"
+    android:layout_marginLeft="@dimen/movie_margin_left"
+    android:layout_marginRight="@dimen/movie_trailer_margin_right"
+    android:background="@color/black_full"
+    >
+
+        <ImageView
+            android:layout_width="@dimen/iv_movie_trailer_width"
+            android:layout_height="@dimen/iv_movie_trailer_height"
+            android:src="@drawable/img_dummy_movie_trailer"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Re-Release Trailer"
+            android:layout_gravity="right"
+            style="@style/white_text_black_border"
+            android:layout_marginTop="@dimen/movie_trailer_margin_top"
+            android:layout_marginRight="@dimen/movie_trailer_margin_right"
+            android:textSize="@dimen/tv_information_text_size"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trailer"
+            android:layout_gravity="bottom"
+            style="@style/white_text_black_border"
+            android:layout_marginLeft="@dimen/movie_trailer_margin_left"
+            android:layout_marginBottom="@dimen/movie_trailer_margin_bottom"
+            android:textSize="@dimen/tv_information_text_size"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_play_circle_outline_white_64dp"
+            android:layout_gravity="center"
+            />
+
+</FrameLayout>
