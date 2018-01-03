@@ -1,8 +1,10 @@
 package xyz.hsuyeemon.movies.network.responses;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
-import xyz.hsuyeemon.movies.data.vo.MovieVO;
+import xyz.hsuyeemon.movies.data.vo.PopularMovieVO;
 
 /**
  * Created by Dell on 1/1/2018.
@@ -14,7 +16,9 @@ public class GetMovieResponse {
     private String message;
     private String apiVersion;
     private int page;
-    private List<MovieVO> movies;
+
+    @SerializedName("popular-movies")
+    private List<PopularMovieVO> movies;
 
     public int getCode() {
         return code;
@@ -32,7 +36,7 @@ public class GetMovieResponse {
         return page;
     }
 
-    public List<MovieVO> getMovies() {
+    public List<PopularMovieVO> getMovies() {
         return movies;
     }
 }

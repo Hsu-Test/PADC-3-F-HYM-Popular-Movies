@@ -3,8 +3,11 @@ package xyz.hsuyeemon.movies.network;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import xyz.hsuyeemon.movies.PopularMovieApp;
+import xyz.hsuyeemon.movies.events.LoadedMoviesEvent;
+import xyz.hsuyeemon.movies.network.responses.GetMovieResponse;
 
 /**
  * Created by Dell on 12/29/2017.
@@ -29,24 +34,25 @@ public class HttpUrlConnectionDataAgent implements MovieDataAgent {
 
     private static HttpUrlConnectionDataAgent sHttpUrlConnectionDataAgent;
 
-    private HttpUrlConnectionDataAgent(){
+    private HttpUrlConnectionDataAgent() {
 
     }
-    public static HttpUrlConnectionDataAgent getObjInstance(){
-        if(sHttpUrlConnectionDataAgent==null){
-            sHttpUrlConnectionDataAgent=new HttpUrlConnectionDataAgent();
+
+    public static HttpUrlConnectionDataAgent getObjInstance() {
+        if (sHttpUrlConnectionDataAgent == null) {
+            sHttpUrlConnectionDataAgent = new HttpUrlConnectionDataAgent();
         }
         return sHttpUrlConnectionDataAgent;
     }
 
     @Override
-    public void loadNews() {
-        Log.d("","log in main thread");
-        new AsyncTask<Void,Void,Void>(){
+    public void loadMovie() {
+        Log.d("", "log in main thread");
+        new AsyncTask<Void, Void, Void>() {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                Log.d("","log in background thread");
+                Log.d("", "log in background thread");
 
                 URL url;
                 BufferedReader reader = null;
@@ -55,7 +61,7 @@ public class HttpUrlConnectionDataAgent implements MovieDataAgent {
                 try {
                     // create the HttpURLConnection
                     //http://padcmyanmar.com/padc-3/mm-news/apis/v1/getMMNews.php
-                    url = new URL("http://padcmyanmar.com/padc-3/mm-news/apis/v1/getMMNews.php"); //1.
+                    url = new URL("http://padcmyanmar.com/padc-3/popular-movies/apis/v1/getPopularMovies.php"); //1.
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection(); //2.
 
                     // just want to do an HTTP POST here
@@ -73,12 +79,13 @@ public class HttpUrlConnectionDataAgent implements MovieDataAgent {
                     //put the request parameter into NameValuePair list.
                     List<NameValuePair> params = new ArrayList<>(); //6.
                     //params.add(new BasicNameValuePair(MyanmarAttractionsConstants.PARAM_ACCESS_TOKEN, MyanmarAttractionsConstants.ACCESS_TOKEN));
-                    params.add(new BasicNameValuePair("access_token","b002c7e1a528b7cb460933fc2875e916"));
-                    params.add(new BasicNameValuePair("page","1"));
+                    params.add(new BasicNameValuePair("access_token", "b002c7e1a528b7cb460933fc2875e916"));
+                    params.add(new BasicNameValuePair("page", "1"));
 
 
                     //write the parameters from NameValuePair list into connection obj.
                     OutputStream outputStream = connection.getOutputStream();
+                    Log.d(PopularMovieApp.LOG_TAG, "Connection");
                     BufferedWriter writer = new BufferedWriter(
                             new OutputStreamWriter(outputStream, "UTF-8"));
                     writer.write(getQuery(params));
@@ -98,16 +105,16 @@ public class HttpUrlConnectionDataAgent implements MovieDataAgent {
                     }
 
                     String responseString = stringBuilder.toString(); //9.
-                    Log.d(PopularMovieApp.LOG_TAG,"responseSting :"+responseString);
+                    Log.d(PopularMovieApp.LOG_TAG, "responseSting :" + responseString);
 
-                    //Gson gson=new Gson();
-                    //GetMovieResponse getNewsResponse=gson.fromJson(responseString, GetMovieResponse.class);
-                    //Log.d(PopularMovieApp.LOG_TAG, "getNewsResponse news size"+getNewsResponse.getMovies().size());
+                    Gson gson = new Gson();
+                    GetMovieResponse getMovieResponse = gson.fromJson(responseString, GetMovieResponse.class);
+                    Log.d(PopularMovieApp.LOG_TAG, "getMovieResponse movie size" + getMovieResponse.getMovies().size());
 
-                    //EventBus.getDefault().post(new LoadedNewsEvent(getNewsResponse.getMovies())); //event broadcast
+                    EventBus.getDefault().post(new LoadedMoviesEvent(getMovieResponse.getMovies())); //event broadcast
 
                 } catch (Exception e) {
-                    Log.e(PopularMovieApp.LOG_TAG,e.getMessage());
+                    Log.e(PopularMovieApp.LOG_TAG, e.getMessage());
                     /*
                     Log.e(MyanmarAttractionsApp.TAG, e.getMessage());
                     AttractionModel.getInstance().notifyErrorInLoadingAttractions(e.getMessage());
@@ -130,6 +137,7 @@ public class HttpUrlConnectionDataAgent implements MovieDataAgent {
         }.execute();
 
     }
+
     private String getQuery(List<NameValuePair> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;
@@ -147,5 +155,5 @@ public class HttpUrlConnectionDataAgent implements MovieDataAgent {
 
         return result.toString();
     }
-    }
+}
 

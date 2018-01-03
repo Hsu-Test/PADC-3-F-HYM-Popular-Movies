@@ -1,5 +1,6 @@
 package xyz.hsuyeemon.movies.data.models;
 
+import xyz.hsuyeemon.movies.network.HttpUrlConnectionDataAgent;
 import xyz.hsuyeemon.movies.network.MovieDataAgent;
 
 /**
@@ -12,15 +13,25 @@ public class MovieModel {
 
     private MovieDataAgent mMovieDataAgent;
 
-    private MovieModel(){
+    private MovieModel() {
 
+        mMovieDataAgent = HttpUrlConnectionDataAgent.getObjInstance();
     }
 
-    public static MovieModel getObjInstance(){
-        if(sMovieModel==null){
-            sMovieModel=new MovieModel();
+    public static MovieModel getObjInstance() {
+        if (sMovieModel == null) {
+            sMovieModel = new MovieModel();
         }
         return sMovieModel;
+    }
+
+    /**
+     * loads news from Network layer
+     */
+    public void loadNews() {
+
+        mMovieDataAgent.loadMovie();
+
     }
 
 }

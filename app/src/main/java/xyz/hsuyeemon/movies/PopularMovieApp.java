@@ -8,5 +8,5 @@ import android.app.Application;
 
 public class PopularMovieApp extends Application {
 
-    public static final String LOG_TAG="PopularMovieApp";
+    public static final String LOG_TAG = "PopularMovieApp";
 }

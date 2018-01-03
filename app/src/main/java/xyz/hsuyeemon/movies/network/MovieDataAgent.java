@@ -8,5 +8,5 @@ public interface MovieDataAgent {
     /**
      * load news from network
      */
-    void loadNews();
+    void loadMovie();
 }

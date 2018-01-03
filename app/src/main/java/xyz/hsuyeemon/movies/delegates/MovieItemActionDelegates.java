@@ -7,6 +7,7 @@ package xyz.hsuyeemon.movies.delegates;
 public interface MovieItemActionDelegates {
 
     void onTapMovieItem();
+
     void onTapMovieOverview();
 
 }

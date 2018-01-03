@@ -8,17 +8,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import xyz.hsuyeemon.movies.PopularMovieApp;
+import xyz.hsuyeemon.movies.R;
 import xyz.hsuyeemon.movies.adapters.MovieAdapter;
+import xyz.hsuyeemon.movies.data.models.MovieModel;
 import xyz.hsuyeemon.movies.delegates.MovieItemActionDelegates;
+import xyz.hsuyeemon.movies.events.LoadedMoviesEvent;
 
-public class MainActivity extends AppCompatActivity implements MovieItemActionDelegates {
+public class MainActivity extends AppCompatActivity
+        implements MovieItemActionDelegates {
+
     @BindView(R.id.rv_movies)
     RecyclerView rvMovies;
 
@@ -29,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements MovieItemActionDe
     FloatingActionButton fab;
 
     private MovieAdapter moviesAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +48,24 @@ public class MainActivity extends AppCompatActivity implements MovieItemActionDe
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        moviesAdapter=new MovieAdapter(this);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        moviesAdapter = new MovieAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         rvMovies.setLayoutManager(linearLayoutManager);
         rvMovies.setAdapter(moviesAdapter);
+
+        MovieModel.getObjInstance().loadNews();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -63,20 +89,27 @@ public class MainActivity extends AppCompatActivity implements MovieItemActionDe
 
         return super.onOptionsItemSelected(item);
     }
+
     @OnClick(R.id.fab)
-    public void onTabFab(View view){
-        Snackbar.make(view,"You tap Search",Snackbar.LENGTH_LONG).setAction("Action",null).show();
+    public void onTabFab(View view) {
+        Snackbar.make(view, "You tap Search", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
     }
 
     @Override
     public void onTapMovieItem() {
-        Intent intent=new Intent(getApplicationContext(),MovieDetailsActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MovieDetailsActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void onTapMovieOverview() {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMovieLoaded(LoadedMoviesEvent event) {
+        Log.d(PopularMovieApp.LOG_TAG, "onMovieLoad" + event.getMovieList());
+        moviesAdapter.setMovies(event.getMovieList());
     }
 }

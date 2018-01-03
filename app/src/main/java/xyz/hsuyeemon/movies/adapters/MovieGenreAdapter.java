@@ -16,10 +16,10 @@ import xyz.hsuyeemon.movies.viewholders.ItemMovieGenreViewHolder;
 public class MovieGenreAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context=parent.getContext();
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View movieGenreViewHolder=inflater.inflate(R.layout.item_movie_genre,parent,false);
-        ItemMovieGenreViewHolder itemMovieGenreViewHolder=new ItemMovieGenreViewHolder(movieGenreViewHolder);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View movieGenreViewHolder = inflater.inflate(R.layout.item_movie_genre, parent, false);
+        ItemMovieGenreViewHolder itemMovieGenreViewHolder = new ItemMovieGenreViewHolder(movieGenreViewHolder);
         return itemMovieGenreViewHolder;
     }
 
